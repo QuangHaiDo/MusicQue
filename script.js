@@ -1,8 +1,6 @@
 $(function()
 {
-    var songs = [];
-    songs = scanAllSongs();
-	songs = shuffle(songs);
+    let songs = scanAllSongs();
     var playerTrack = $("#player-track");
 	var bgArtwork = $('#bg-artwork');
 	var bgArtworkUrl;
@@ -42,19 +40,8 @@ $(function()
                 }
             }
         });
-        console.log('line 44');
+        console.log("call githubAPI ajax request done");
         return playList;
-    }
-
-	function shuffle(a) {
-		var j, x, i;
-		for (i = a.length - 1; i > 0; i--) {
-			j = Math.floor(Math.random() * (i + 1));
-			x = a[i];
-			a[i] = a[j];
-			a[j] = x;
-        }
-		return a;
     }
 
     function playPause()
@@ -261,7 +248,7 @@ $(function()
 	{	
         
         audio = new Audio();
-
+        
 		selectTrack(0);
 		
 		audio.loop = false;
