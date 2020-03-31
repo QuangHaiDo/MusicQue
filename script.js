@@ -1,5 +1,8 @@
 $(function()
 {
+    var songs = [];
+    songs = scanAllSongs();
+	songs = shuffle(songs);
     var playerTrack = $("#player-track");
 	var bgArtwork = $('#bg-artwork');
 	var bgArtworkUrl;
@@ -19,14 +22,30 @@ $(function()
 		buffInterval = null, tFlag = false;
 	
 	var playPreviousTrackButton = $('#play-previous'), playNextTrackButton = $('#play-next'), currIndex = -1;
-	
-	var songs = [{
-		artist: "Hai dep trai",
-		name: "Tên Bài Hát",
-		url: "Musics\Mau Noi Yeu Em - Tan Lac Tran Phu_ Ha Tu.mp3",
-		picture: "https://raw.githubusercontent.com/himalayasingh/music-player-1/master/img/_1.jpg"
-	}];
-	
+
+    function scanAllSongs(){
+        let playList = [];
+        $.ajax({
+            url: 'https://api.github.com/repos/QuangHaiDo/MusicQue/contents/Musics',
+            dataType: 'jsonp',
+            success: function(results)
+            {
+                scanSongs = results.data;
+                for (let i=0;i<scanSongs.length;i++){
+                    let item = {
+                        artist: scanSongs[i].size,
+                        name: scanSongs[i].name,
+                        url: scanSongs[i].download_url,
+                        picture: ""
+                    };
+                    playList.push(item);
+                }
+            }
+        });
+        console.log('line 44');
+        return playList;
+    }
+
 	function shuffle(a) {
 		var j, x, i;
 		for (i = a.length - 1; i > 0; i--) {
@@ -34,10 +53,9 @@ $(function()
 			x = a[i];
 			a[i] = a[j];
 			a[j] = x;
-		}
+        }
 		return a;
-	}
-	songs = shuffle(songs);
+    }
 
     function playPause()
     {
@@ -241,6 +259,7 @@ $(function()
 
     function initPlayer()
 	{	
+        
         audio = new Audio();
 
 		selectTrack(0);
