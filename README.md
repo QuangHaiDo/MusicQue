@@ -1,1 +1,1 @@
-# MusicQue
+# MusicPlayer
