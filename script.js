@@ -248,7 +248,6 @@ $(function()
 	{	
         
         audio = new Audio();
-        
 		selectTrack(0);
 		
 		audio.loop = false;
